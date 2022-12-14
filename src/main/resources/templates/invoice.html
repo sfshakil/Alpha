@@ -133,42 +133,169 @@
     <div class="content-header row">
     </div>
     <div class="content-body">
-      <!-- Dashboard Ecommerce Starts -->
-      <section id="dashboard-ecommerce">
-        <div class="row match-height">
-          <!-- Medal Card -->
-          <div class="col-xl-3">
-            <div class="card">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-body text-center ">
-                    <a href="files_check">
-                      <span class="btn btn-primary waves-effect waves-float waves-light">Start</span>
-                    </a>
+      <section class="invoice-preview-wrapper">
+        <div class="row invoice-preview">
+          <!-- Invoice -->
+          <div class="col-xl-9 col-md-8 col-12">
+            <div class="card invoice-preview-card">
+              <div class="card-body invoice-padding pb-0">
+                <!-- Header starts -->
+                <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+                  <div>
+                    <div class="logo-wrapper">
+                      <h3 class="text-primary invoice-logo">Alpha</h3>
+                    </div>
+                    <p class="card-text mb-25">DIO Office</p>
+                  </div>
+                  <div class="mt-md-0 mt-2">
+                    <h4 class="invoice-title">
+                      Voucher
+                      <span class="invoice-number">#3492</span>
+                    </h4>
+                    <div class="invoice-date-wrapper">
+                      <p class="invoice-date-title">Date Issued:</p>
+                      <p class="invoice-date">13/12/2022</p>
+                    </div>
+
+                  </div>
+                </div>
+                <!-- Header ends -->
+              </div>
+
+              <hr class="invoice-spacing">
+
+              <!-- Address and Contact starts -->
+<!--              <div class="card-body invoice-padding pt-0">
+                <div class="row invoice-spacing">
+                  <div class="col-xl-8 p-0">
+                    <h6 class="mb-2">Invoice To:</h6>
+                    <h6 class="mb-25">Thomas shelby</h6>
+                    <p class="card-text mb-25">Shelby Company Limited</p>
+                    <p class="card-text mb-25">Small Heath, B10 0HF, UK</p>
+                    <p class="card-text mb-25">718-986-6062</p>
+                    <p class="card-text mb-0">peakyFBlinders@gmail.com</p>
+                  </div>
+                  <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+                    <h6 class="mb-2">Payment Details:</h6>
+                    <table>
+                      <tbody>
+                      <tr>
+                        <td class="pe-1">Total Due:</td>
+                        <td><span class="fw-bold">$12,110.55</span></td>
+                      </tr>
+                      <tr>
+                        <td class="pe-1">Bank name:</td>
+                        <td>American Bank</td>
+                      </tr>
+                      <tr>
+                        <td class="pe-1">Country:</td>
+                        <td>United States</td>
+                      </tr>
+                      <tr>
+                        <td class="pe-1">IBAN:</td>
+                        <td>ETD95476213874685</td>
+                      </tr>
+                      <tr>
+                        <td class="pe-1">SWIFT code:</td>
+                        <td>BR91905</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>-->
+              <!-- Address and Contact ends -->
+
+              <!-- Invoice Description starts -->
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th class="py-1">Transaction Type</th>
+                    <th class="py-1">Amount</th>
+                    <th class="py-1">Debit Account</th>
+                    <th class="py-1">Credit Account</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <span th:each="p : ${payments}">
+                    <tr th:each="ac: ${p.getAccountMappings()}">
+                      <td th:text="${ac.getTran_type()}"></td>
+                      <!--Start Second Column-->
+                      <td  th:if="${ac.getTran_type()} == 'Purchese'" th:text="${p.getIssuer_original_sale_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'PurcheseReversal'" th:text="${p.getIssuer_original_sale_rvrsl_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'PurchaseChargeback'" th:text="${p.getIssuer_dispute_resp_fin_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'PurchaseChargebackReversal'" th:text="${p.getIssuer_dispute_resp_fin_clearing_rvrsl_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'MerchantdizeCredit'" th:text="${p.getIssuer_merchandise_credit_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'MerchantdizeCreditReversal'" th:text="0.00"></td>
+                      <td  th:if="${ac.getTran_type()} == 'Withdrwal'" th:text="${p.getIssuer_original_cash_rvrsl_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'WithdrwalReversal'" th:text="${p.getIssuer_original_cash_rvrsl_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'WithdrwalChargeback'" th:text="${p.getIssuer_original_cash_dispute_fin_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'WithdrwalChargebackReversal'" th:text="${p.getIssuer_original_cash_dispute_fin_rvrsl_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'OriginalCredit'" th:text="${p.getIssuer_original_credit_clearing_amount()}"></td>
+                      <td  th:if="${ac.getTran_type()} == 'OriginalCreditReversal'" th:text="0.00"></td>
+                      <td  th:if="${ac.getTran_type()} == 'OriginalCreditChargeback'" th:text="0.00"></td>
+                      <td  th:if="${ac.getTran_type()} == 'OriginalCreditChargebackReversal'" th:text="0.00"></td>
+                      <td  th:if="${ac.getTran_type()} == 'PaymentSystemCharges'" th:text="0.00"></td>
+                      <td  th:if="${ac.getTran_type()} == 'OptionalIssuingFee'" th:text="0.00"></td>
+                      <!--End Second Column-->
+
+                      <td th:text="${ac.getDr_account()}"></td>
+                      <td th:text="${ac.getCr_account()}"></td>
+
+                    </tr>
+                  </span>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-body invoice-padding pb-0">
+                <div class="row invoice-sales-total-wrapper">
+                  <div class="col-md-2 d-flex justify-content-end order-md-2 order-1">
+                    <div class="invoice-total-wrapper">
+                      <!--<div class="invoice-total-item">
+                        <p class="invoice-total-title">Subtotal:</p>
+                        <p class="invoice-total-amount">$1800</p>
+                      </div>
+                      <div class="invoice-total-item">
+                        <p class="invoice-total-title">Discount:</p>
+                        <p class="invoice-total-amount">$28</p>
+                      </div>
+                      <div class="invoice-total-item">
+                        <p class="invoice-total-title">Tax:</p>
+                        <p class="invoice-total-amount">21%</p>
+                      </div>-->
+                      <hr class="my-50">
+                      <div class="invoice-total-item">
+                        <p class="invoice-total-title">Total:0000</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- Invoice Description ends -->
             </div>
           </div>
-          <div class="col-xl-3">
+          <!-- /Invoice -->
+
+          <!-- Invoice Actions -->
+          <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
             <div class="card">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-body text-center ">
-                    <a href="#" data-bs-target="login">
-                      <span class="btn btn-primary  waves-effect waves-float waves-light">Custom Option</span>
-                    </a>
-                  </div>
-                </div>
+              <div class="card-body">
+                <button class="btn btn-primary w-100 mb-75 waves-effect waves-float waves-light" data-bs-toggle="modal" data-bs-target="#send-invoice-sidebar">
+                  Send Voucher
+                </button>
+                <button class="btn btn-outline-secondary w-100 btn-download-invoice mb-75 waves-effect">Download</button>
+                <a class="btn btn-outline-secondary w-100 mb-75 waves-effect" href="./app-invoice-print.html" target="_blank"> Print </a>
+                <button class="btn btn-success w-100 waves-effect waves-float waves-light" data-bs-toggle="modal" data-bs-target="#add-payment-sidebar">
+                  Add Payment
+                </button>
               </div>
             </div>
           </div>
-          <!--/ Medal Card -->
+          <!-- /Invoice Actions -->
         </div>
-
       </section>
-      <!-- Dashboard Ecommerce ends -->
-
     </div>
   </div>
 </div>
